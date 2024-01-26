@@ -1,0 +1,6 @@
+---
+http.host: 0.0.0.0
+node.name: logstash
+dead_letter_queue.enable: true
+path.dead_letter_queue: "/usr/share/logstash/data/dead_letter_queue"
+dead_letter_queue.flush_interval: 3000
