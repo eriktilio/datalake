@@ -1,5 +1,5 @@
-- pipeline.id: main
-  path.config: "/usr/share/logstash/pipeline/logstash.conf"
+- pipeline.id: logges
+  path.config: "/usr/share/logstash/pipeline/logges.conf"
 
-- pipeline.id: dead-letter-queue
+- pipeline.id: dlq
   path.config: "/usr/share/logstash/pipeline/dlq.conf"
