@@ -5,6 +5,8 @@ services:
     build:
       context: ./elasticsearch
       dockerfile: Dockerfile
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
     container_name: elasticsearch
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
@@ -25,6 +27,8 @@ services:
     build:
       context: ./logstash
       dockerfile: Dockerfile
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
     container_name: logstash
     volumes:
       - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro,Z
@@ -32,6 +36,7 @@ services:
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
       - ./logstash/files:/files/
     ports:
+      - 8080:8080
       - 5044:5044
       - 50000:50000/tcp
       - 50000:50000/udp
@@ -43,6 +48,32 @@ services:
       - elk
     depends_on:
       - elasticsearch
+    restart: unless-stopped
+
+  opc_data_generator:
+    build:
+      context: ./opc_mock
+      dockerfile: Dockerfile
+    container_name: opc_data_generator
+    ports:
+      - 4840:4840
+    depends_on:
+      - elasticsearch
+      - logstash
+    networks:
+      - elk
+    restart: unless-stopped
+
+  client_opcua:
+    build:
+      context: ./client_opcua
+      dockerfile: Dockerfile
+    container_name: client_opcua
+    depends_on:
+      - logstash
+      - opc_data_generator
+    networks:
+      - elk
     restart: unless-stopped
 
 networks:

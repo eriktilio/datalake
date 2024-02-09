@@ -1,5 +1,8 @@
 - pipeline.id: logges
   path.config: "/usr/share/logstash/pipeline/logges.conf"
 
-- pipeline.id: dlq
+- pipeline.id: client_opcua
+  path.config: "/usr/share/logstash/pipeline/client_opcua.conf"
+
+- pipeline.id: dead-letter-queue
   path.config: "/usr/share/logstash/pipeline/dlq.conf"
