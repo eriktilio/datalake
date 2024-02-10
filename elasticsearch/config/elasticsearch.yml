@@ -1,5 +1,11 @@
----
+# Nome do cluster Elasticsearch para identificação e formação de cluster.
 cluster.name: docker-cluster
+
+# Endereço de rede que o Elasticsearch usará para comunicação. Definir como 0.0.0.0 permite que o Elasticsearch escute em todas as interfaces de rede.
 network.host: 0.0.0.0
+
+# Configuração da licença autogerada pelo X-Pack. Tipo 'basic' oferece recursos básicos gratuitos.
 xpack.license.self_generated.type: basic
+
+# Habilitar a segurança do X-Pack para proteger o cluster Elasticsearch.
 xpack.security.enabled: true

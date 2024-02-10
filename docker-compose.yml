@@ -48,6 +48,9 @@ services:
       - elk
     depends_on:
       - elasticsearch
+      - client_opcua
+      - opc_data_generator
+      - mysql_database
     restart: unless-stopped
 
   opc_data_generator:
@@ -57,9 +60,6 @@ services:
     container_name: opc_data_generator
     ports:
       - 4840:4840
-    depends_on:
-      - elasticsearch
-      - logstash
     networks:
       - elk
     restart: unless-stopped
@@ -71,7 +71,22 @@ services:
     container_name: client_opcua
     depends_on:
       - logstash
-      - opc_data_generator
+    networks:
+      - elk
+    restart: unless-stopped
+
+  mysql_database:
+    build:
+      context: ./mysql_database
+      dockerfile: Dockerfile
+    container_name: mysql_database
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
       - elk
     restart: unless-stopped

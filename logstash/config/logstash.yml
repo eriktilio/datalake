@@ -1,6 +1,14 @@
----
+# Configuração para permitir que o Logstash escute em todas as interfaces de rede.
 http.host: 0.0.0.0
+
+# Nome do nó Logstash para identificação.
 node.name: logstash
+
+# Ativar o uso da Dead Letter Queue (DLQ) para lidar com eventos que não puderam ser processados.
 dead_letter_queue.enable: true
+
+# Caminho para o diretório onde as mensagens da DLQ serão armazenadas.
 path.dead_letter_queue: "/usr/share/logstash/data/dead_letter_queue"
+
+# Intervalo (em milissegundos) para enviar eventos da DLQ para a saída quando há falhas.
 dead_letter_queue.flush_interval: 3000
