@@ -1,3 +1,7 @@
+# Configuração da pipeline 'dead-letter-queue' com o identificador 'dead-letter-queue' e o arquivo de configuração em "/usr/share/logstash/pipeline/dlq.conf".
+- pipeline.id: dead-letter-queue
+  path.config: "/usr/share/logstash/pipeline/dlq.conf"
+
 # Configuração da pipeline 'logges' com o identificador 'logges' e o arquivo de configuração em "/usr/share/logstash/pipeline/logges.conf".
 - pipeline.id: logges
   path.config: "/usr/share/logstash/pipeline/logges.conf"
@@ -9,7 +13,3 @@
 # Configuração da pipeline 'mysql_database' com o identificador 'mysql_database' e o arquivo de configuração em "/usr/share/logstash/pipeline/mysql_database.conf".
 - pipeline.id: mysql_database
   path.config: "/usr/share/logstash/pipeline/mysql_database.conf"
-
-# Configuração da pipeline 'dead-letter-queue' com o identificador 'dead-letter-queue' e o arquivo de configuração em "/usr/share/logstash/pipeline/dlq.conf".
-- pipeline.id: dead-letter-queue
-  path.config: "/usr/share/logstash/pipeline/dlq.conf"

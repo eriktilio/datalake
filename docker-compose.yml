@@ -20,7 +20,7 @@ services:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
       discovery.type: single-node
     networks:
-      - elk
+      - datalake
     restart: unless-stopped
 
   logstash:
@@ -45,12 +45,9 @@ services:
       LS_JAVA_OPTS: -Xms256m -Xmx256m
       LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
     networks:
-      - elk
+      - datalake
     depends_on:
       - elasticsearch
-      - client_opcua
-      - opc_data_generator
-      - mysql_database
     restart: unless-stopped
 
   opc_data_generator:
@@ -61,7 +58,7 @@ services:
     ports:
       - 4840:4840
     networks:
-      - elk
+      - datalake
     restart: unless-stopped
 
   client_opcua:
@@ -69,10 +66,8 @@ services:
       context: ./client_opcua
       dockerfile: Dockerfile
     container_name: client_opcua
-    depends_on:
-      - logstash
     networks:
-      - elk
+      - datalake
     restart: unless-stopped
 
   mysql_database:
@@ -88,11 +83,11 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
-      - elk
+      - datalake
     restart: unless-stopped
 
 networks:
-  elk:
+  datalake:
     driver: bridge
 
 volumes:

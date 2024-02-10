@@ -16,6 +16,10 @@ COPY ./pipeline/logges.conf /usr/share/logstash/pipeline/logges.conf
 COPY ./pipeline/client_opcua.conf /usr/share/logstash/pipeline/client_opcua.conf
 COPY ./pipeline/mysql_database.conf /usr/share/logstash/pipeline/mysql_database.conf
 
+# Crie o diretório para a Dead Letter Queue e garanta as permissões adequadas
+RUN mkdir -p /usr/share/logstash/data/dead_letter_queue
+RUN chown -R logstash:logstash /usr/share/logstash/data/dead_letter_queue
+
 # Instale os plugins
 RUN bin/logstash-plugin install logstash-output-exec
 RUN bin/logstash-plugin install logstash-input-http
