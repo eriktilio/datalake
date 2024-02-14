@@ -85,7 +85,21 @@ services:
     networks:
       - datalake
     restart: unless-stopped
-
+  # Container OpenVPN para estabelecer conexão VPN e facilitar a integração com fontes de dados do Logstash.
+  # Esse contêiner permite a configuração de uma VPN e compartilha a mesma rede com os demais serviços.
+  # openvpn-client:
+  #   image: kylemanna/openvpn
+  #   container_name: openvpn-client
+  #   cap_add:
+  #     - NET_ADMIN
+  #   volumes:
+  #     - ./client.ovpn:/etc/openvpn/client.ovpn:ro
+  #   environment:
+  #     - OPENVPN_USERNAME=seu_usuario
+  #     - OPENVPN_PASSWORD=sua_senha
+  #   networks:
+  #     - datalake
+  #   restart: unless-stopped
 networks:
   datalake:
     driver: bridge
