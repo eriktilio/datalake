@@ -6,6 +6,18 @@
 - pipeline.id: logges
   path.config: "/usr/share/logstash/pipeline/logges.conf"
 
+# Configuração da pipeline 'csv' com o identificador 'bad_reason' e o arquivo de configuração em "/usr/share/logstash/pipeline/bad_reason.conf".
+- pipeline.id: bad_reason
+  path.config: "/usr/share/logstash/pipeline/bad_reason.conf"
+
+# Configuração da pipeline 'csv' com o identificador 'tests_fqc' e o arquivo de configuração em "/usr/share/logstash/pipeline/tests_fqc.conf".
+- pipeline.id: tests_fqc
+  path.config: "/usr/share/logstash/pipeline/tests_fqc.conf"
+
+# Configuração da pipeline 'csv' com o identificador 'work_orders' e o arquivo de configuração em "/usr/share/logstash/pipeline/work_orders.conf".
+- pipeline.id: work_orders
+  path.config: "/usr/share/logstash/pipeline/work_orders.conf"
+
 # Configuração da pipeline 'client_opcua' com o identificador 'client_opcua' e o arquivo de configuração em "/usr/share/logstash/pipeline/client_opcua.conf".
 - pipeline.id: client_opcua
   path.config: "/usr/share/logstash/pipeline/client_opcua.conf"
