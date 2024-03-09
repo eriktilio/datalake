@@ -17,11 +17,3 @@
 # Configuração da pipeline 'csv' com o identificador 'work_orders' e o arquivo de configuração em "/usr/share/logstash/pipeline/work_orders.conf".
 - pipeline.id: work_orders
   path.config: "/usr/share/logstash/pipeline/work_orders.conf"
-
-# Configuração da pipeline 'client_opcua' com o identificador 'client_opcua' e o arquivo de configuração em "/usr/share/logstash/pipeline/client_opcua.conf".
-- pipeline.id: client_opcua
-  path.config: "/usr/share/logstash/pipeline/client_opcua.conf"
-
-# Configuração da pipeline 'mysql_database' com o identificador 'mysql_database' e o arquivo de configuração em "/usr/share/logstash/pipeline/mysql_database.conf".
-- pipeline.id: mysql_database
-  path.config: "/usr/share/logstash/pipeline/mysql_database.conf"

@@ -1,7 +1,5 @@
-# Configuração para permitir que o Logstash escute em todas as interfaces de rede.
+---
 http.host: 0.0.0.0
-
-# Nome do nó Logstash para identificação.
 node.name: logstash
 
 # Ativar o uso da Dead Letter Queue (DLQ) para lidar com eventos que não puderam ser processados.

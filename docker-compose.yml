@@ -3,7 +3,7 @@ version: "3.7"
 services:
   elasticsearch:
     build:
-      context: ./elasticsearch
+      context: elasticsearch/
       dockerfile: Dockerfile
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
@@ -25,15 +25,15 @@ services:
 
   logstash:
     build:
-      context: ./logstash
+      context: logstash/
       dockerfile: Dockerfile
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     container_name: logstash
     volumes:
-      - ./logstash/config:/usr/share/logstash/config/:ro,Z
+      - ./logstash/config:/usr/share/logstash/config:ro,Z
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
-      - ./logstash/files:/files/
+      - ./logstash/files:/files
     ports:
       - 8080:8080
       - 5044:5044
@@ -52,65 +52,9 @@ services:
       - elasticsearch
     restart: unless-stopped
 
-  opc_data_generator:
-    build:
-      context: ./opc_data_generator
-      dockerfile: Dockerfile
-    container_name: opc_data_generator
-    ports:
-      - 4840:4840
-    networks:
-      - datalake
-    restart: unless-stopped
-
-  client_opcua:
-    build:
-      context: ./client_opcua
-      dockerfile: Dockerfile
-      args:
-        LOGSTASH_URL: ${LOGSTASH_URL}
-        OPC_DATA_URL: ${OPC_DATA_URL}
-    container_name: client_opcua
-    networks:
-      - datalake
-    restart: unless-stopped
-
-  mysql_database:
-    image: mysql:8.3
-    container_name: mysql_database
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_HOST: ${MYSQL_HOST}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    volumes:
-      - ./mysql_database/migrations:/docker-entrypoint-initdb.d/:ro
-      - mysql:/var/lib/mysql
-    networks:
-      - datalake
-    restart: unless-stopped
-  # Container OpenVPN para estabelecer conexão VPN e facilitar a integração com fontes de dados do Logstash.
-  # Esse contêiner permite a configuração de uma VPN e compartilha a mesma rede com os demais serviços.
-  # openvpn-client:
-  #   image: kylemanna/openvpn
-  #   container_name: openvpn-client
-  #   cap_add:
-  #     - NET_ADMIN
-  #   volumes:
-  #     - ./client.ovpn:/etc/openvpn/client.ovpn:ro
-  #   environment:
-  #     - OPENVPN_USERNAME=seu_usuario
-  #     - OPENVPN_PASSWORD=sua_senha
-  #   networks:
-  #     - datalake
-  #   restart: unless-stopped
 networks:
   datalake:
     driver: bridge
 
 volumes:
   elasticsearch:
-  mysql:
