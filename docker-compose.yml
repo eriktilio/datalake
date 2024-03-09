@@ -17,7 +17,9 @@ services:
     environment:
       node.name: elasticsearch
       ES_JAVA_OPTS: -Xms512m -Xmx512m
+      ELASTIC_USER: ${ELASTIC_USER}
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
+      LICENSE: ${LICENSE}
       discovery.type: single-node
     networks:
       - datalake
@@ -51,6 +53,23 @@ services:
     depends_on:
       - elasticsearch
     restart: unless-stopped
+
+  kibana:
+    build:
+      context: kibana/
+      dockerfile: Dockerfile
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    container_name: kibana
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: ${ELASTICSEARCH_URL}
+      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
+    networks:
+      - datalake
+    depends_on:
+      - elasticsearch
 
 networks:
   datalake:
